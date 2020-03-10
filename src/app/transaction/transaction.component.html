@@ -1,0 +1,37 @@
+ <div class="d-flex h-100 justify-content-center">
+    <div class="d-flex flex-column w-25 justify-content-center align-items-center">
+        <div class="form-group" >
+            <span><h5>{{ title }}</h5></span>
+        </div>
+
+       <form class="d-flex flex-column w-75">
+            <mat-form-field>
+                <mat-label>Date</mat-label>
+                <input matInput [formControl]="dateFormControl" [errorStateMatcher]="errorMatcher" [matDatepicker]="myPicker">
+                <mat-datepicker-toggle  matSuffix [for]="myPicker"></mat-datepicker-toggle>
+                <mat-datepicker #myPicker></mat-datepicker>
+                <mat-error *ngIf="dateFormControl.hasError('required')">
+                    date is required
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Description</mat-label>
+                <input matInput [formControl]="descFormControl" [errorStateMatcher]="errorMatcher">
+                <mat-error *ngIf="descFormControl.hasError('required')">description is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Amount</mat-label>
+                <input matInput [formControl]="amountFormControl" [errorStateMatcher]="errorMatcher">
+                <mat-error *ngIf="amountFormControl.hasError('required')">amount is required</mat-error>
+            </mat-form-field>
+        
+            <mat-card-actions>
+                <button mat-raised-button color="primary" class="btn-block" (click)="save()">Save</button>
+            </mat-card-actions>
+        </form>
+     
+
+    </div>
+</div>

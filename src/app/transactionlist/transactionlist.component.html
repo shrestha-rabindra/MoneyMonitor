@@ -1,0 +1,11 @@
+<div style="display: flex; flex-direction: row">
+    <div style=" overflow: hidden; flex-grow: 1">
+        <ag-grid-angular
+            style="width: 500px; height: 500px;"
+            class="ag-theme-balham"
+            [rowData]="rowData | async"
+            [columnDefs]="columnDefs"
+            (gridReady)="onGridReady($event)">
+        </ag-grid-angular>
+    <div>
+</div>

@@ -1,0 +1,22 @@
+ <nav class="navbar navbar-expand navbar-dark bg-dark fixed-top">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Left</a>
+            </li>
+        </ul>
+    </div>
+    <div class="mx-auto order-0">
+        <a class="navbar-brand mx-auto" href="#">Money Monitor</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto"> 
+          <li class="nav-item">
+                <a class="nav-link" *ngIf="authService.isUserLoggedIn()" href="" (click)="authService.logout()">Log Out</a>
+            </li>
+        </ul>
+    </div>
+</nav>
