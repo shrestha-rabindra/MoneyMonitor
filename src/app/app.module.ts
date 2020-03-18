@@ -22,6 +22,7 @@ import { AccountService } from './services/account.service';
 import { DialogComponent } from './dialog/dialog.component';
 import { TransactionComponent } from './transaction/transaction.component';
 import { MaterialModule } from './material.module';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,7 @@ import { MaterialModule } from './material.module';
     HttpClientModule,
     MaterialModule
   ],
-  providers: [HttpClient, AccountService],
+  providers: [HttpClient, AccountService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

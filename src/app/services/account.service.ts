@@ -15,16 +15,16 @@ export class AccountService {
   accountCollection: AngularFirestoreCollection<any>;
   accountDoc: AngularFirestoreDocument<any>;
 
-  constructor(public afs: AngularFirestore) { }
+  constructor(public afs: AngularFirestore,
+    public datePipe: DatePipe) { }
 
   /**
    * get the list of the finanacial transactions of the user
    * @param userId 
    */
   public getAccount(userId){
-    this.accountCollection = this.afs.collection('users/' + userId + '/account', ref => ref.orderBy('date'));
-
-    //return this.accountCollection.valueChanges();
+    this.accountCollection = this.afs.collection('users/' + userId + '/account', ref => ref.orderBy('date','desc'));
+   
 
     return this.accountCollection
           .valueChanges()
@@ -42,7 +42,7 @@ export class AccountService {
     const accountCollRef: AngularFirestoreCollection<any> = this.afs.collection('users').doc(userId).collection('account');
     
     return accountCollRef.add({
-      date: trans.date,
+      date: this.datePipe.transform(trans.date,'yyyy/MM/dd'),
       description: trans.description,
       creditAmount: trans.creditAmount,
       debitAmount: trans.debitAmount

@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { Account } from '../models/account';
 import { database } from 'firebase';
 import { filter } from 'rxjs/operators';
+import { AlignedGridsService } from 'ag-grid-community';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-transactionlist',
@@ -21,9 +23,9 @@ export class TransactionlistComponent implements OnInit {
 
  columnDefs = [
     {headerName: 'Date', field: 'date', sortable: true},
-    {headerName: 'Description', field: 'description', filter: true, sortable: true},
-    {headerName: 'Debit', field: 'debitAmount', sortable: true},
-    {headerName: 'Credit', field: 'creditAmount', sortable: true}
+    {headerName: 'Description', field: 'description', filter: true, sortable: true, autoHeight: true, cellStyle: {'white-space': 'normal'}, width: 400},
+    {headerName: 'Debit', field: 'debitAmount', sortable: true, cellStyle: {textAlign: 'right'}},
+    {headerName: 'Credit', field: 'creditAmount', sortable: true, cellStyle: {textAlign: 'right'}}
   ];
 
 
@@ -44,8 +46,8 @@ export class TransactionlistComponent implements OnInit {
     this.gridColumnApi = params.columnApi;
 
     params.api.sizeColumnsToFit();
+    params.api.resetRowHeights();
 
-    params.api.sizeColumnsToFit();
     window.addEventListener("resize", function() {
       setTimeout(function() {
         params.api.sizeColumnsToFit();
