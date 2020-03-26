@@ -5,7 +5,7 @@ export enum ModalType {
     WARNING = "WARNING"
 }
 
-export enum TransactionType{
-    INCOME = "INCOME",
-    EXPENSE = "EXPENSE"
+export enum ActionType{
+    ADD = "ADD",
+    EDIT = "EDIT"
 }

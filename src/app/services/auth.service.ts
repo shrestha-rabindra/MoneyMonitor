@@ -1,23 +1,23 @@
 import { Injectable, NgZone } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Router } from '@angular/router';
-import { User } from './user';
+import { Router, Data, NavigationExtras } from '@angular/router';
 import { auth } from 'firebase/app';
 import { DialogService } from './dailog.service';
-import { ModalType } from '../modaltype';
+import { ModalType } from '../enums';
+import { promise } from 'protractor';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   userInfo: any;
-
   constructor(public afAuth: AngularFireAuth,
               public afStore: AngularFirestore,
               public router: Router,
               public ngZone: NgZone,
-              public dialogService: DialogService ) {
+              public dialogService: DialogService) {
                 //save user in local storage
                 this.afAuth.authState.subscribe(user => {
                   if (user) {
@@ -47,31 +47,11 @@ export class AuthService {
      * @param email 
      * @param password 
      */
-    public loginWithEmail(email, password) {
-      return this.afAuth.auth.signInWithEmailAndPassword(email, password)
-      .then((result) => {
-        if(result.user.emailVerified){
-          this.ngZone.run(() => {
-              this.router.navigate(['dashboard']);
-            });
+    async loginWithEmail(email, password) {
+  
+      let res = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
 
-            this.setUser(result.user);
-        }
-        else{
-
-          this.dialogService.showDialog('Warning',
-          'Your email is not yet verified, click on the link sent to your email',
-          'Ok',
-          'Close',
-          ModalType.WARNING,
-          false,
-          "md" 
-          );
-          
-        }
-      }).catch((error) => {
-        window.alert(error.message);
-      });
+      return res;
 
     }
 
@@ -81,21 +61,30 @@ export class AuthService {
      * @param email 
      * @param password 
      */
-    public register(email, password) {
-     this.userAlreadyExist(email).subscribe(result => {
-       if(result.length>0) {
-         window.alert('Another user with same email address already exist')
-       }
-       else{
-          return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-          .then((result) => {
-            this.sendVerificationEmail(result.user);
-            this.setUser(result.user);
-          }).catch((error) => {
-            window.alert(error.message)
-          })
-        }
-     })
+  public register(email, password) {
+
+    return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+      .then((result) => {
+        this.sendVerificationEmail(result.user);
+        this.setUser(result.user);
+      }).catch((error) => {
+        window.alert(error.message)
+      })
+
+     //this.userAlreadyExist(email).subscribe(result => {
+     //  if(result.length>0) {
+     //    window.alert('Another user with same email address already exist')
+     //  }
+     //  else{
+     //     return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+     //     .then((result) => {
+     //       this.sendVerificationEmail(result.user);
+     //       this.setUser(result.user);
+     //     }).catch((error) => {
+     //       window.alert(error.message)
+     //     })
+     //   }
+     //})
     }
 
     public userAlreadyExist(email) {
@@ -105,10 +94,15 @@ export class AuthService {
     /**
      * send the verification email to the sign up user
      */
-    public sendVerificationEmail(user) {
+  public sendVerificationEmail(user) {
       return this.afAuth.auth.currentUser.sendEmailVerification()
         .then(() => {
-          this.router.navigate(['verify-email/' + user]);
+          let navigationExtra: NavigationExtras = {
+            queryParams: {
+              'user': JSON.stringify(user)
+            }
+          };
+          this.router.navigate(['verify-email'], navigationExtra);
         } );
 
     }
@@ -175,8 +169,8 @@ export class AuthService {
      * @param user 
      */
     public setUser(user){
-     const userRefDoc: AngularFirestoreDocument<any> = this.afStore.doc('users/'+user.uid) ;
-     const userData: User = {
+      const userRefDoc: AngularFirestoreDocument<any> = this.afStore.doc('users/' + user.uid);
+      const userData: User = {
        userId: user.uid,
        email: user.email,
        displayName: user.displayName,

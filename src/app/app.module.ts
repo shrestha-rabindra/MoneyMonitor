@@ -23,6 +23,12 @@ import { DialogComponent } from './dialog/dialog.component';
 import { TransactionComponent } from './transaction/transaction.component';
 import { MaterialModule } from './material.module';
 import { DatePipe } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { EditRenderer } from './edit-renderer/edit-renderer.component';
+import { DeleteRenderer } from './delete-renderer/delete-renderer.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 @NgModule({
   declarations: [
@@ -36,7 +42,9 @@ import { DatePipe } from '@angular/common';
     FooterComponent,
     TransactionlistComponent,
     DialogComponent,
-    TransactionComponent
+    TransactionComponent,
+    EditRenderer,
+    DeleteRenderer
   ],
   imports: [
     BrowserModule,
@@ -49,9 +57,12 @@ import { DatePipe } from '@angular/common';
     AppRoutingModule,
     AgGridModule.withComponents([]),
     HttpClientModule,
-    MaterialModule
+    MaterialModule,
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule
+    
   ],
-  providers: [HttpClient, AccountService, DatePipe],
+  providers: [HttpClient, AccountService, DatePipe, MatSnackBar],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,24 +1,32 @@
 <div class="d-flex h-100 justify-content-center">
-  <div class="d-flex flex-column w-100 justify-content-center align-items-center">
-    <h3>Sign Up</h3>
-      <div class="form-group w-25">
-        <input type="email" class="form-control" placeholder="Email Address" #userEmail required>
-      </div>
+  <div class="d-flex flex-column w-25 justify-content-center">
+    <div class="card">
+      <div class="card-header"><span class="text-center"><h3>Sign Up</h3></span></div>
+      <div class="card-body">
+        <form class="d-flex flex-column w-100">
+          <mat-form-field>
+            <input type="email" matInput [formControl]="userEmail" [errorStateMatcher]="errorMatcher" placeholder="Email">
+            <mat-error *ngIf="userEmail.hasError('required')">email address is required</mat-error>
+            <mat-error *ngIf="userEmail.hasError('pattern')">email is not valid</mat-error>
+          </mat-form-field>
+          
 
-      <div class="form-group w-25">
-        <input type="password" class="form-control" placeholder="Password" #userPwd required>
-      </div>
+          <mat-form-field>
+            <input type="password" matInput [formControl]="userPwd" [errorStateMatcher]="errorMatcher" placeholder="Password">
+            <mat-error *ngIf="userPwd.hasError('required')">password is required</mat-error>
+            <mat-error *ngIf="userPwd.hasError('minlength')">password should be at least 6 characters</mat-error>
+          </mat-form-field>
 
-      <div class="form-group w-25">
-        <input type="button" class="btn btn-primary btn-block" value="Sign Up" (click)="authService.register(userEmail.value, userPwd.value)">
-      </div>
-      
-    <div class="form-group">
-      <span>Already have an account? <a class="redirect" routerLink="/login">Log In</a></span>
+          <mat-card-actions>
+            <button class="btn btn-primary btn-block mt-2" (click)="authService.register(userEmail.value, userPwd.value)">Sign Up</button>
+          </mat-card-actions>
+        </form>
     </div>
-
+      <div class="card-footer text-center">
+        <span>Already have an account? <a class="redirect" routerLink="/login">Log In</a></span>
+      </div>
   </div>
-
 </div>
+   
 
      

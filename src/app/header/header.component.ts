@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { User } from '../services/user';
 
 @Component({
   selector: 'app-header',

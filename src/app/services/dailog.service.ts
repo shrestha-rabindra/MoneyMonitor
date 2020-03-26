@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalType } from '../modaltype';
+import { ModalType, ActionType } from '../enums';
 import { DialogComponent } from '../dialog/dialog.component';
 import { TransactionComponent } from '../transaction/transaction.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DialogService {
 
-  constructor(public modalService: NgbModal) { }
+  constructor(public modalService: NgbModal) {
+  }
 
   /**
    * show the dialog box based specified param using the component DailogComponent
@@ -43,16 +45,16 @@ export class DialogService {
   }
 
   public showPopupDialog(
-    content: any,
+    contentComponent: any,
+    action: string,
+    contentData: any = null,
     title: string,
-    btnAcceptText: string = "OK",
-    btnDeclineText: string = "Cancel",
     dialogSize: 'sm'|'md'|'lg' = 'md'
-  ){
-    const modalRef = this.modalService.open(TransactionComponent, {size: dialogSize});
+  ) {
+    const modalRef = this.modalService.open(contentComponent, { size: dialogSize});
     modalRef.componentInstance.title = title;
-    modalRef.componentInstance.btnAcceptText = btnAcceptText;
-    modalRef.componentInstance.btnDeclineText = btnDeclineText;
+    modalRef.componentInstance.action = action;
+    modalRef.componentInstance.dataSource = contentData;
 
     return modalRef;
 

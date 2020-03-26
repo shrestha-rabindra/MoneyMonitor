@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, fromDocRef } from '@angular/fire/firestore';
 import { Account } from '../models/account';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { filter } from 'minimatch';
 import { DatePipe } from '@angular/common';
-import { TransactionType } from '../modaltype';
+import { Guid } from "guid-typescript";
+import { ActionType } from '../enums';
 
 @Injectable({
   providedIn: 'root'
@@ -28,8 +29,10 @@ export class AccountService {
 
     return this.accountCollection
           .valueChanges()
-          .pipe(map((result: Account[]) => result.map(r => new Account(r.date, r.description, r.debitAmount, r.creditAmount)) )
+          .pipe(map((result: Account[]) => result.map(r => new Account(r.id, r.date, r.description, r.debitAmount, r.creditAmount)) )
           );
+
+  
   }
 
   /**
@@ -38,15 +41,33 @@ export class AccountService {
    * @param trans 
    * @param transType 
    */
-  public addTransaction( userId: string, trans: Account){
+  async saveTransaction( userId: string, trans: Account, action: string){
     const accountCollRef: AngularFirestoreCollection<any> = this.afs.collection('users').doc(userId).collection('account');
-    
-    return accountCollRef.add({
+   
+    let val = {
+      id: trans.id,
       date: this.datePipe.transform(trans.date,'yyyy/MM/dd'),
       description: trans.description,
       creditAmount: trans.creditAmount,
       debitAmount: trans.debitAmount
-    });
+
+    }
+
+    if(action===ActionType.ADD)
+     return accountCollRef.doc(trans.id).set(val);
+    else
+      return accountCollRef.doc(trans.id).update(val);
+     
+  }
+
+  /**
+   * delete the transaction
+   * @param userId
+   * @param accountId
+   */
+  public deleteTransaction(userId: string, accountId: string){
+    return this.afs.collection('users').doc(userId).collection('account').doc(accountId).delete();
+
 
   }
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { DialogService } from '../services/dailog.service';
-import { TransactionType } from '../modaltype';
 
 @Component({
   selector: 'app-dashboard',

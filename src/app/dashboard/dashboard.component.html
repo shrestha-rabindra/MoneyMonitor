@@ -1,25 +1,7 @@
-<div class="d-flex h-100 justify-content-center">
-	<div class="d-flex flex-column w-100 justify-content-start align-items-center">
-		<div class="d-flex">
-			<div class="form-group mt-1">
-			<button type="button" class="btn btn-primary" routerLink="/transaction/income">Add Income</button>
-			</div>
-
-			<div class="form-group ml-5 mr-5 d-flex flex-column align-items-center">
-				<span>Your Balanace:</span>
-				<span>{{ "Rs-" + balance }}</span>
-			</div>
-
-			<div class="form-group mt-1">
-				<button type="button" class="btn btn-primary" routerLink="/transaction/expense">Add Expense</button>
-			</div>
-		</div>
-
-	<div class="form-group mt-2">
-		<app-transactionlist [userId]="userId"></app-transactionlist>
-	</div>
-
-	</div>	
+<div class="container-fluid">
+  
+	<div ><app-transactionlist [userId]="userId"></app-transactionlist></div>
+ 
 </div>
 
 

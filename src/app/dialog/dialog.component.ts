@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalType } from '../modaltype';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -12,7 +11,6 @@ export class DialogComponent implements OnInit {
   message: string;
   btnAcceptText: string;
   btnDeclineText: string;
-  modalType: ModalType;
   showDeclineButton: boolean;
 
   constructor(public activeModal: NgbActiveModal) { }

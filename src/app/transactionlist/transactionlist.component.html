@@ -1,11 +1,24 @@
-<div style="display: flex; flex-direction: row">
-    <div style=" overflow: hidden; flex-grow: 1">
-        <ag-grid-angular
-            style="width: 600px; height: 500px;"
-            class="ag-theme-balham"
-            [rowData]="rowData | async"
-            [columnDefs]="columnDefs"
-            (gridReady)="onGridReady($event)">
-        </ag-grid-angular>
-    <div>
+<div class="card">
+  <div class="card-header">
+    <h3 >{{title}} <button mat-stroked-button class="pull-right btn btn-primary" (click)="add()"><i class="fa fa-plus" aria-hidden="true"></i> Add Transaction</button></h3>
+  </div>
+
+    <div  class="card-body">
+      <ag-grid-angular
+                  class="ag-theme-balham"
+                  [rowData]="rowData | async"
+                  [domLayout]="domLayout"
+                  [columnDefs]="columnDefs"
+                  [pagination]="true"
+                  [paginationPageSize]="8"
+                  [autoSizePadding]="true"
+                  [allowDragFromColumnsToolPanel]="false"
+                  [context]="context"
+                  [frameworkComponents]="frameworkComponents"
+                  (gridReady)="onGridReady($event)">
+              </ag-grid-angular>        
+    </div>
+
+  
+
 </div>

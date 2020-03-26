@@ -5,8 +5,16 @@ import { Observable } from 'rxjs';
 import { Account } from '../models/account';
 import { database } from 'firebase';
 import { filter } from 'rxjs/operators';
-import { AlignedGridsService } from 'ag-grid-community';
+import { AlignedGridsService, ValueCache } from 'ag-grid-community';
 import { DatePipe } from '@angular/common';
+import { EditRenderer } from '../edit-renderer/edit-renderer.component';
+import { DeleteRenderer } from '../delete-renderer/delete-renderer.component';
+import { DialogService } from '../services/dailog.service';
+import { ModalType, ActionType } from '../enums'
+import { TransactionComponent } from '../transaction/transaction.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DialogComponent } from '../dialog/dialog.component';
+
 
 @Component({
   selector: 'app-transactionlist',
@@ -14,31 +22,85 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./transactionlist.component.scss']
 })
 export class TransactionlistComponent implements OnInit {
+  
   @Input() userId: string;
+  title: string;
+  context: any;
+  frameworkComponents: any;
 
   private gridApi;
   private gridColumnApi;
 
-  domLayout = 'print';
+  domLayout = 'autoHeight';
 
  columnDefs = [
-    {headerName: 'Date', field: 'date', sortable: true},
-    {headerName: 'Description', field: 'description', filter: true, sortable: true, autoHeight: true, cellStyle: {'white-space': 'normal'}, width: 400},
-    {headerName: 'Debit', field: 'debitAmount', sortable: true, cellStyle: {textAlign: 'right'}},
-    {headerName: 'Credit', field: 'creditAmount', sortable: true, cellStyle: {textAlign: 'right'}}
+    {headerName: 'id', field: 'id', hide:true},
+    {headerName: 'Date', field: 'date', sortable: true, width:150},
+    {headerName: 'Description', field: 'description', filter: true, sortable: true, autoHeight: true, cellStyle: {'white-space': 'normal'}, width: 300},
+    {headerName: 'Debit', field: 'debitAmount', sortable: true, cellStyle: {textAlign: 'right'}, width:100},
+    {headerName: 'Credit', field: 'creditAmount', sortable: true, cellStyle: {textAlign: 'right'}, width:100},
+    {headerName: 'Edit', field: 'value', cellRenderer:'editRenderer', width: 75, editable: false, colId: 'params',cellStyle: {textAlign: 'center'}},
+    {headerName: 'Delete', field: 'value', cellRenderer:'deleteRenderer', width:75, cellStyle: {textAlign: 'center'}}
   ];
 
 
   rowData: any;
 
   constructor(public accountService: AccountService,
-              public http: HttpClient) { }
+              public http: HttpClient,
+              public dialogService: DialogService,
+              public modalService: NgbModal) {
+                this.context = {parentComponent: this};
+                this.frameworkComponents = {
+                  editRenderer: EditRenderer,
+                  deleteRenderer: DeleteRenderer
+                };
+
+
+               }
 
   ngOnInit(): void {
 
+    this.title = 'Financial Statement';
     //get datasource for the grid
     this.rowData = this.accountService.getAccount(this.userId);
 
+  }
+
+  editCallback(trans: Account){
+    this.dialogService.showPopupDialog(TransactionComponent, ActionType.EDIT, trans, 'Edit Transaction', 'sm');
+
+  }
+
+  add(){
+    this.dialogService.showPopupDialog(TransactionComponent, ActionType.ADD, null, 'Add Transaction', 'sm');
+  }
+
+  //delete the specified transaction row item
+  deleteCallback(accountId) {
+
+
+    this.dialogService.showDialog("Delete Transaction",
+                                  'Are you sure you want to delete the transaction?',
+                                  'Yes',
+                                  'No',
+                                  ModalType.CONFIRMATION,
+                                  true,
+                                  'md')
+                                  .then((accepted) => {
+                                      if(accepted){
+                                          if(accountId){
+                                            this.accountService.deleteTransaction(this.userId,accountId)
+                                            .then(() => {
+                                              
+                                            });
+                                          }
+                                      }
+                                    })
+                                  .catch(error => {
+                                    console.log('Failed to delete account. Error:'+error);
+                                  });
+  
   }
 
   public onGridReady(params){

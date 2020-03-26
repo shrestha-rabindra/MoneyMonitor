@@ -7,17 +7,15 @@ import { VerifyEmailComponent } from './admin/verify-email/verify-email.componen
 import { ForgotPasswordComponent } from './admin/forgot-password/forgot-password.component';
 import { AuthGuard } from './auth.guard';
 import { TransactionComponent } from './transaction/transaction.component';
-import { TransactionType } from './modaltype';
-
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'dashboard', component:DashboardComponent, canActivate: [AuthGuard]},
-  {path: 'verify-email/:user', component: VerifyEmailComponent },
+  {path: 'verify-email', component: VerifyEmailComponent },
   {path: 'forgot-password', component: ForgotPasswordComponent},
-  {path: 'transaction/:trans-type', component: TransactionComponent}
+  {path: 'transaction/', component: TransactionComponent}
 ];
 
 @NgModule({
