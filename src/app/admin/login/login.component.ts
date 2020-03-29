@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
 import { MyErrorStateMatcher } from '../../utility';
+import { NavigationEvent } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker-view-model';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { MyErrorStateMatcher } from '../../utility';
 })
 export class LoginComponent implements OnInit {
   approved: boolean;
-  errMsg: string;
+  errorMessage: string;
   errorMatcher = new MyErrorStateMatcher();
 
   constructor(public authService: AuthService,
@@ -33,30 +34,33 @@ export class LoginComponent implements OnInit {
 
   async signIn() {
 
+    if (this.userName.invalid || this.userPassword.invalid)
+      return false;
+
     await this.authService.loginWithEmail(this.userName.value, this.userPassword.value)
       .then((result) => {
         this.router.navigate(['dashboard']);
         this.authService.setUser(result.user);
 
       }).catch((error) => {
-
-        //this.userName.setErrors({ invalid: true });
-        //this.userName.setErrors({ invalid: true });
+        this.userPassword.setErrors({ 'error-extra': true });
 
         switch (error.code) {
             case "auth/invalid-email":
             case "auth/wrong-password":
             case "auth/user-not-found":
               {
-                this.errMsg = "Wrong email address or password.";
+                this.errorMessage = "Wrong email address or password.";
                 break;
               }
             default:
               {
-                this.errMsg = "Wrong email address or password.";
+                this.errorMessage = "Wrong email address or password.";
                 break;
               }
-          }
+        }
+        console.log(error);
+
         });
   }
 

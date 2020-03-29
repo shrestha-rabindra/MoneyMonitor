@@ -28,6 +28,9 @@ import { EditRenderer } from './edit-renderer/edit-renderer.component';
 import { DeleteRenderer } from './delete-renderer/delete-renderer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { EmailhandlerComponent } from './admin/emailhandler/emailhandler.component';
+import { EmailConfirmationComponent } from './admin/email-confirmation/email-confirmation.component';
+import { ChangePasswordComponent } from './admin/change-password/change-password.component';
 
 
 @NgModule({
@@ -44,7 +47,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     DialogComponent,
     TransactionComponent,
     EditRenderer,
-    DeleteRenderer
+    DeleteRenderer,
+    EmailhandlerComponent,
+    EmailConfirmationComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

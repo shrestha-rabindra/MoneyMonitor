@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "kosh-eeff8"
+  },
+  "targets": {
+    "kosh-eeff8": {
+      "hosting": {
+        "moneymonitor": [
+          "moneymonitor-pratham"
+        ]
+      }
+    }
+  }
+}

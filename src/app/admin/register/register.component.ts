@@ -10,7 +10,8 @@ import { MyErrorStateMatcher } from 'src/app/utility';
 })
 export class RegisterComponent implements OnInit {
 registrationForm: FormGroup;
-errorMatcher = new MyErrorStateMatcher();
+  errorMatcher = new MyErrorStateMatcher();
+  errorMessage: string;
 
   constructor(public authService: AuthService) { 
     this.registrationForm = new FormGroup({
@@ -22,6 +23,34 @@ errorMatcher = new MyErrorStateMatcher();
   userPwd = new FormControl('', [Validators.required, Validators.minLength(6)])
 
   ngOnInit(): void {
+  }
+
+  signUp() {
+    if (this.userEmail.invalid || this.userPwd.invalid)
+      return;
+
+    this.authService.register(this.userEmail.value, this.userPwd.value)
+      .then((result) => {
+        this.authService.sendVerificationEmail(result.user);
+        this.authService.setUser(result.user);
+      }).catch((error) => {
+        switch (error.code) {
+          case "auth/invalid-email":
+            this.userEmail.setErrors({ 'error-extra': true });
+            this.errorMessage = 'email is not valid';
+            break;
+          case "auth/email-already-in-use":
+            this.userEmail.setErrors({ 'error-extra': true });
+            this.errorMessage = 'email already in use by other user';
+            break;
+          default:
+            this.userPwd.setErrors({ 'error-extra': true });
+            this.errorMessage = 'unexpected error, sign up failed'
+            break;
+        }
+
+        console.log(error);
+      });
   }
 
 }

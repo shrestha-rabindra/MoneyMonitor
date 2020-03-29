@@ -3,11 +3,14 @@
     "",
     "\\src",
     "\\src\\app",
+    "\\src\\app\\admin",
+    "\\src\\app\\admin\\change-password",
+    "\\src\\app\\admin\\email-confirmation",
+    "\\src\\app\\admin\\forgot-password",
+    "\\src\\app\\admin\\login",
     "\\src\\app\\admin\\register",
-    "\\src\\app\\admin\\verify-email",
-    "\\src\\app\\models",
-    "\\src\\app\\services"
+    "\\src\\app\\admin\\verify-email"
   ],
-  "SelectedNode": "\\src\\app\\app.module.ts",
+  "SelectedNode": "\\src\\app\\admin\\verify-email\\verify-email.component.ts",
   "PreviewInSolutionExplorer": false
 }

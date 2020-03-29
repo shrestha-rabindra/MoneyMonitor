@@ -63,13 +63,8 @@ export class AuthService {
      */
   public register(email, password) {
 
-    return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        this.sendVerificationEmail(result.user);
-        this.setUser(result.user);
-      }).catch((error) => {
-        window.alert(error.message)
-      })
+    return this.afAuth.auth.createUserWithEmailAndPassword(email, password);
+      
 
      //this.userAlreadyExist(email).subscribe(result => {
      //  if(result.length>0) {
@@ -113,12 +108,7 @@ export class AuthService {
      * @param passworResetEmail 
      */
     public submitForgotPassword(passworResetEmail){
-      return this.afAuth.auth.sendPasswordResetEmail(passworResetEmail)
-      .then(() => {
-        window.alert('sent password reset email')
-      }).catch((error) => {
-        window.alert(error.message);
-      })
+      return this.afAuth.auth.sendPasswordResetEmail(passworResetEmail);
     }
 
     /**
@@ -185,6 +175,32 @@ export class AuthService {
      });
 
     }
+
+  /**
+   * Verify the authentication code in the email verification link sent to the user
+   * @param verificationCode
+   */
+  verifyEmail(verificationCode) {
+    return this.afAuth.auth.applyActionCode(verificationCode);
+  }
+
+  /**
+   * Verify the password reset code sent to the specified email
+   * @param resetCode
+   */
+  verifyPasswordResetCode(resetCode) {
+    return this.afAuth.auth.verifyPasswordResetCode(resetCode);
+
+  }
+
+  /**
+   * reset the new password
+   * @param resetCode
+   * @param newPassword
+   */
+  changePassword(resetCode, newPassword) {
+    return this.afAuth.auth.confirmPasswordReset(resetCode, newPassword);
+  }
 
 
 }

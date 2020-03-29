@@ -8,6 +8,7 @@
             <input type="email" matInput [formControl]="userEmail" [errorStateMatcher]="errorMatcher" placeholder="Email">
             <mat-error *ngIf="userEmail.hasError('required')">email address is required</mat-error>
             <mat-error *ngIf="userEmail.hasError('pattern')">email is not valid</mat-error>
+            <mat-error *ngIf="userEmail.hasError('error-extra')">{{ errorMessage }}</mat-error>
           </mat-form-field>
           
 
@@ -15,10 +16,11 @@
             <input type="password" matInput [formControl]="userPwd" [errorStateMatcher]="errorMatcher" placeholder="Password">
             <mat-error *ngIf="userPwd.hasError('required')">password is required</mat-error>
             <mat-error *ngIf="userPwd.hasError('minlength')">password should be at least 6 characters</mat-error>
+            <mat-error *ngIF="userPwd.hasError('error-extra')">{{ errorMessage }}</mat-error>
           </mat-form-field>
 
           <mat-card-actions>
-            <button class="btn btn-primary btn-block mt-2" (click)="authService.register(userEmail.value, userPwd.value)">Sign Up</button>
+            <button class="btn btn-primary btn-block mt-2" (click)="signUp()">Sign Up</button>
           </mat-card-actions>
         </form>
     </div>

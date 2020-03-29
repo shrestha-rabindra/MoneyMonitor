@@ -7,6 +7,9 @@ import { VerifyEmailComponent } from './admin/verify-email/verify-email.componen
 import { ForgotPasswordComponent } from './admin/forgot-password/forgot-password.component';
 import { AuthGuard } from './auth.guard';
 import { TransactionComponent } from './transaction/transaction.component';
+import { EmailhandlerComponent } from './admin/emailhandler/emailhandler.component';
+import { EmailConfirmationComponent } from './admin/email-confirmation/email-confirmation.component';
+import { ChangePasswordComponent } from './admin/change-password/change-password.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -15,7 +18,10 @@ const routes: Routes = [
   {path: 'dashboard', component:DashboardComponent, canActivate: [AuthGuard]},
   {path: 'verify-email', component: VerifyEmailComponent },
   {path: 'forgot-password', component: ForgotPasswordComponent},
-  {path: 'transaction/', component: TransactionComponent}
+  {path: 'transaction/', component: TransactionComponent },
+  { path: 'action', component: EmailhandlerComponent },
+  { path: 'confirm-email', component: EmailConfirmationComponent },
+  { path: 'change-password', component: ChangePasswordComponent }
 ];
 
 @NgModule({
