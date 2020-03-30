@@ -1,11 +1,9 @@
-<div class="modal-header">
-    <h3>{{ title }}</h3>
-    <button type="button" class="close" aria-label="Close" (click)="dismiss()">
-      <span aria-hidden="true">&times;</span>
-    </button>
+
+<h2 mat-dialog-title>{{title}}</h2>
+<div mat-dialog-content>{{message}}</div>
+<div mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close *ngIf="showDeclineButton">{{btnDeclineText}}</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>{{btnAcceptText}}</button>
 </div>
-<div class="modal-body">{{ message }}</div>
-<div class="modal-footer">
-    <button (click)="decline()" class="btn btn-danger" *ngIf="showDeclineButton">{{ btnDeclineText }}</button>
-    <button (click)="accept()" class="btn btn-primary">{{ btnAcceptText }}</button>
-</div>
+
+

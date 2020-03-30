@@ -80,26 +80,27 @@ export class TransactionlistComponent implements OnInit {
   deleteCallback(accountId) {
 
 
-    this.dialogService.showDialog("Delete Transaction",
-                                  'Are you sure you want to delete the transaction?',
-                                  'Yes',
-                                  'No',
-                                  ModalType.CONFIRMATION,
-                                  true,
-                                  'md')
-                                  .then((accepted) => {
-                                      if(accepted){
-                                          if(accountId){
-                                            this.accountService.deleteTransaction(this.userId,accountId)
-                                            .then(() => {
+    this.dialogService.showDialog(
+      "Delete Transaction",
+      'Are you sure you want to delete the transaction?',
+      'Yes',
+      'No',
+      ModalType.CONFIRMATION,
+      true,
+      'md')
+      .then((accepted) => {
+          if(accepted){
+              if(accountId){
+                this.accountService.deleteTransaction(this.userId,accountId)
+                .then(() => {
                                               
-                                            });
-                                          }
-                                      }
-                                    })
-                                  .catch(error => {
-                                    console.log('Failed to delete account. Error:'+error);
-                                  });
+                });
+              }
+          }
+        })
+      .catch(error => {
+        console.log('Failed to delete account. Error:'+error);
+      });
   
   }
 

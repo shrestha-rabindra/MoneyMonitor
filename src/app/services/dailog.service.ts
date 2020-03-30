@@ -3,14 +3,15 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalType, ActionType } from '../enums';
 import { DialogComponent } from '../dialog/dialog.component';
 import { TransactionComponent } from '../transaction/transaction.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DialogService {
-
-  constructor(public modalService: NgbModal) {
+  matDailogRef: MatDialogRef<any>;
+  constructor(public modalService: NgbModal,
+  public matDialog: MatDialog) {
   }
 
   /**
@@ -33,15 +34,21 @@ export class DialogService {
     dialogSize: 'sm'|'lg'|'md' = 'md'
   ): Promise<boolean>
   {
-      const modalRef = this.modalService.open(DialogComponent, {size: dialogSize});
-      modalRef.componentInstance.title = title;
-      modalRef.componentInstance.message = message;
-      modalRef.componentInstance.btnAcceptText = btnAcceptText;
-      modalRef.componentInstance.btnDeclineText = btnDeclineText;
-      modalRef.componentInstance.modaltype = modalType;
-      modalRef.componentInstance.showDeclineButton = showDeclineButton;
+    
 
-      return modalRef.result;
+      this.matDailogRef = this.matDialog.open(DialogComponent, {
+      data: {
+        title: title,
+        message: message,
+        btnAcceptText: btnAcceptText,
+        btnDeclineText: btnDeclineText,
+        modalType: modalType,
+        showDeclineButton: showDeclineButton
+      }
+
+    });
+
+    return this.matDailogRef.afterClosed().toPromise();
   }
 
   public showPopupDialog(

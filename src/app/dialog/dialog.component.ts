@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, Injectable, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { DialogService } from '../services/dailog.service';
 
 @Component({
   selector: 'app-dialog',
@@ -13,21 +14,17 @@ export class DialogComponent implements OnInit {
   btnDeclineText: string;
   showDeclineButton: boolean;
 
-  constructor(public activeModal: NgbActiveModal) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+    public matDialog: MatDialog,
+    public dialogService: DialogService) {
+    this.title = data['title'];
+    this.message = data['message'];
+    this.btnAcceptText = data['btnAcceptText'];
+    this.btnDeclineText = data['btnDeclineText'];
+    this.showDeclineButton = data['showDeclineButton'];
+  }
 
   ngOnInit(): void {
-  }
-
-  public accept() {
-    this.activeModal.close(true);
-  }
-
-  public decline() {
-    this.activeModal.close(false);
-  }
-
-  public dismiss() {
-    this.activeModal.dismiss();
   }
 
 }

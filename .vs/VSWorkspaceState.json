@@ -4,13 +4,8 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\admin",
-    "\\src\\app\\admin\\change-password",
-    "\\src\\app\\admin\\email-confirmation",
-    "\\src\\app\\admin\\forgot-password",
-    "\\src\\app\\admin\\login",
-    "\\src\\app\\admin\\register",
-    "\\src\\app\\admin\\verify-email"
+    "\\src\\app\\admin\\forgot-password"
   ],
-  "SelectedNode": "\\src\\app\\admin\\verify-email\\verify-email.component.ts",
+  "SelectedNode": "\\src\\app\\admin\\forgot-password\\forgot-password.component.ts",
   "PreviewInSolutionExplorer": false
 }

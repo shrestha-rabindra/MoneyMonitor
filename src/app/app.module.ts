@@ -31,6 +31,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EmailhandlerComponent } from './admin/emailhandler/emailhandler.component';
 import { EmailConfirmationComponent } from './admin/email-confirmation/email-confirmation.component';
 import { ChangePasswordComponent } from './admin/change-password/change-password.component';
+import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { CdkStepperModule } from '@angular/cdk/stepper';
+import { CdkTableModule } from '@angular/cdk/table';
+import { PortalModule } from '@angular/cdk/portal';
 
 
 @NgModule({
@@ -52,6 +56,7 @@ import { ChangePasswordComponent } from './admin/change-password/change-password
     EmailConfirmationComponent,
     ChangePasswordComponent
   ],
+
   imports: [
     BrowserModule,
     FormsModule,
@@ -65,10 +70,17 @@ import { ChangePasswordComponent } from './admin/change-password/change-password
     HttpClientModule,
     MaterialModule,
     BrowserAnimationsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    CdkStepperModule,
+    CdkTableModule,
+    PortalModule
     
   ],
-  providers: [HttpClient, AccountService, DatePipe, MatSnackBar],
-  bootstrap: [AppComponent]
+  providers: [HttpClient, AccountService, DatePipe, MatSnackBar, { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } }],
+  bootstrap: [AppComponent],
+  entryComponents: [
+    DialogComponent
+  ]
 })
 export class AppModule { }

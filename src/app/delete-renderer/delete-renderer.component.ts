@@ -3,7 +3,7 @@ import { ICellRendererAngularComp } from 'ag-grid-angular';
 
 @Component({
   selector: 'app-delete-renderer',
-  template: `<div class=""><button class="btn btn-sm btn-danger " (click)="delete()"><i class="fa fa-trash" aria-hidden="true"></i></button></div>`,
+  template: `<div class=""><button class="btn btn-sm btn-danger " (click)="delete()"><i class="fa fa-trash fa-xs" aria-hidden="true"></i></button></div>`,
   styleUrls: ['./delete-renderer.component.scss']
 })
 export class DeleteRenderer implements ICellRendererAngularComp {
