@@ -30,8 +30,7 @@ export class DialogService {
     btnAcceptText: string = "OK",
     btnDeclineText: string = "Cancel",
     modalType: ModalType = ModalType.INFORMATION,
-    showDeclineButton: boolean = modalType == ModalType.CONFIRMATION ? true : false,
-    dialogSize: 'sm'|'lg'|'md' = 'md'
+    showDeclineButton: boolean = modalType == ModalType.CONFIRMATION ? true : false
   ): Promise<boolean>
   {
     
@@ -44,7 +43,7 @@ export class DialogService {
         btnDeclineText: btnDeclineText,
         modalType: modalType,
         showDeclineButton: showDeclineButton
-      }
+        }
 
     });
 
@@ -58,7 +57,7 @@ export class DialogService {
     title: string,
     dialogSize: 'sm'|'md'|'lg' = 'md'
   ) {
-    const modalRef = this.modalService.open(contentComponent, { size: dialogSize});
+    const modalRef = this.modalService.open(contentComponent, { size: dialogSize, centered: true });
     modalRef.componentInstance.title = title;
     modalRef.componentInstance.action = action;
     modalRef.componentInstance.dataSource = contentData;

@@ -32,9 +32,7 @@ import { EmailhandlerComponent } from './admin/emailhandler/emailhandler.compone
 import { EmailConfirmationComponent } from './admin/email-confirmation/email-confirmation.component';
 import { ChangePasswordComponent } from './admin/change-password/change-password.component';
 import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
-import { CdkStepperModule } from '@angular/cdk/stepper';
-import { CdkTableModule } from '@angular/cdk/table';
-import { PortalModule } from '@angular/cdk/portal';
+
 
 
 @NgModule({
@@ -71,11 +69,7 @@ import { PortalModule } from '@angular/cdk/portal';
     MaterialModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
-    MatDialogModule,
-    CdkStepperModule,
-    CdkTableModule,
-    PortalModule
-    
+    MatDialogModule   
   ],
   providers: [HttpClient, AccountService, DatePipe, MatSnackBar, { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } }],
   bootstrap: [AppComponent],

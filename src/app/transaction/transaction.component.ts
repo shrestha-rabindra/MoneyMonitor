@@ -116,7 +116,7 @@ compareObjects(o1: any, o2: any): boolean {
         this.activeModal.close(true);
       }
       catch(error){
-        await this.dialogService.showDialog('Error', 'Failed to save transaction' + error, 'Ok', 'Cancel', ModalType.ERROR, false, 'md');
+        await this.dialogService.showDialog('Error', 'Failed to save transaction' + error, 'Ok', 'Cancel', ModalType.ERROR, false);
 
       }   
      

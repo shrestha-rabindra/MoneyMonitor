@@ -86,8 +86,7 @@ export class TransactionlistComponent implements OnInit {
       'Yes',
       'No',
       ModalType.CONFIRMATION,
-      true,
-      'md')
+      true)
       .then((accepted) => {
           if(accepted){
               if(accountId){
